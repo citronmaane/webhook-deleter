@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Webhook Deleter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(135deg, #2d1536, #1e1e1e);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #36363667;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            color: #ff4c4c;
+        }
+        h1 {
+            margin-top: 70px;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #f2f2f2;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .webhook-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80%;
+            margin-top: 30px;
+        }
+        .webhook-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #ffffff;
+            outline: none;
+            transition: 0.3s ease-in-out;
+        }
+        input:focus {
+            background-color: #333;
+            box-shadow: 0 0 5px rgba(108, 10, 128, 0.7);
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #ff4c4c;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #ff1f1f;
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        .delete-btn {
+            background-color: #ff4c4c;
+            border-radius: 8px;
+            padding: 8px 15px;
+        }
+        .delete-btn:hover {
+            background-color: #ff1f1f;
+            transform: scale(1.05);
+        }
+        .add-btn {
+            background-color: #981aa3;
+            border-radius: 8px;
+            padding: 8px 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .add-btn:hover {
+            background-color: #7024a3;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #bbbbbb;
+        }
+        .loading {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top: 4px solid #ff4c4c;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .webhook-entry {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            button, .delete-btn, .add-btn {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Webhook Deleter</a>
+        <a href="credits.html">Credits</a>
+    </div>
+    <h1>Webhook Deleter</h1>
+    <div class="webhook-container" id="webhookContainer">
+        <div class="webhook-entry">
+            <input type="text" class="webhookUrl" placeholder="Enter Webhook URL">
+            <button class="delete-btn" onclick="deleteWebhook(this)">🗑️</button>
+        </div>
+    </div>
+    <button class="add-btn" onclick="addWebhookInput()">Add Another Webhook</button>
+    <p id="status"></p>
+
+    <script>
+        function addWebhookInput() {
+            const container = document.getElementById('webhookContainer');
+            const entry = document.createElement('div');
+            entry.classList.add('webhook-entry');
+            entry.innerHTML = `
+                <input type="text" class="webhookUrl" placeholder="Enter Webhook URL">
+                <button class="delete-btn" onclick="deleteWebhook(this)">Delete</button>
+            `;
+            container.appendChild(entry);
+        }
+
+        async function deleteWebhook(button) {
+            const entry = button.parentElement;
+            const url = entry.querySelector('.webhookUrl').value;
+            const statusText = document.getElementById('status');
+            const loadingSpinner = document.createElement('div');
+            loadingSpinner.classList.add('loading');
+            statusText.textContent = "Deleting webhook...";
+            statusText.appendChild(loadingSpinner);
+
+            if (!url) {
+                statusText.textContent = "Please enter a valid webhook URL.";
+                return;
+            }
+            
+            try {
+                const response = await fetch(url, { method: 'DELETE' });
+                if (response.ok) {
+                    statusText.textContent = "Webhook deleted successfully!";
+                    entry.remove();
+                } else {
+                    statusText.textContent = "Failed to delete webhook. It may not exist or may have already been deleted.";
+                }
+            } catch (error) {
+                statusText.textContent = "Error: " + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

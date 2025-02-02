@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(135deg, #2e3b4e, #1e1e1e);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #36363667;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            color: #ff4c4c;
+        }
+        .container {
+            margin-top: 80px; /* Push content below navbar */
+            text-align: center;
+        }
+        .profile-pic {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffffff;
+            margin-bottom: 15px;
+        }
+        .name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .description {
+            font-size: 1.0rem;
+            font-weight: normal;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="index.html">Webhook Deleter</a>
+        <a href="credits.html">Credits</a>
+    </div>
+
+    <div class="container">
+        <img src="assets/max.png" alt="Profile Picture" class="profile-pic">
+        <div class="name">Marcus.4440</div>
+        <div class="description">Thank you for using my tool.</div>
+    </div>
+
+</body>
+</html>
