@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background: linear-gradient(135deg, #2d1536, #1e1e1e);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .navbar {
+            width: 100%;
+            background-color: #36363667;
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .navbar a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            color: #ff4c4c;
+        }
+        h1 {
+            margin-top: 70px;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #f2f2f2;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .download-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background-color: #00000031;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        .download-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: #33333369;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .download-box img {
+            width: 70px;
+            height: 70px;
+        }
+        .download-box .text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .download-box .text h2 {
+            margin: 0;
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .download-box .text p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            color: #bbbbbb;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #89228d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        button:hover {
+            background-color: #ff09ea;
+            transform: scale(1.05);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            color: #fff;
+        }
+        .popup button {
+            background-color: #ff4c4c;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .popup button:hover {
+            background-color: #ff1f1f;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">Webhook Deleter</a>
+        <a href="credits.html">Credits</a>
+        <a href="spammer.html">Webhook Spammer</a>
+    </div>
+    <div class="download-container">
+        <div class="download-box">
+            <!-- Zip File Icon -->
+            <img src="folder.png" alt="ZIP File Icon">
+            <div class="text">
+                <h2>Webhook Spammer</h2>
+                <p>Made for educational purposes only, do not use it to harm others. Besides the skids of discord, feel free to mess with them.</p>
+            </div>
+        </div>
+    </div>
+    <button id="downloadButton">Download</button>
+
+    <!-- Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <p>By clicking "I understand" you acknowledge to not use this harm innocent others. (Other than the skids)</p>
+            <button id="understandButton">I Understand</button>
+        </div>
+    </div>
+
+    <script>
+        const downloadButton = document.getElementById('downloadButton');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const understandButton = document.getElementById('understandButton');
+        const fileUrl = "spam.py"; // Replace with your file's URL
+
+        // Show popup when download button is clicked
+        downloadButton.addEventListener('click', () => {
+            popupOverlay.style.display = 'flex';
+        });
+
+        // Start the download when "I understand" is clicked
+        understandButton.addEventListener('click', () => {
+            popupOverlay.style.display = 'none';
+            window.location.href = fileUrl; // Initiates the download
+        });
+    </script>
+</body>
+</html>

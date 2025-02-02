@@ -102,14 +102,14 @@
             background-color: #ff1f1f;
             transform: scale(1.05);
         }
-        .add-btn {
+        .add-btn, .reset-btn {
             background-color: #981aa3;
             border-radius: 8px;
             padding: 8px 15px;
             margin-top: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .add-btn:hover {
+        .add-btn:hover, .reset-btn:hover {
             background-color: #7024a3;
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
@@ -142,7 +142,7 @@
                 flex-direction: column;
                 align-items: stretch;
             }
-            button, .delete-btn, .add-btn {
+            button, .delete-btn, .add-btn, .reset-btn {
                 font-size: 14px;
             }
         }
@@ -152,6 +152,7 @@
     <div class="navbar">
         <a href="index.html">Webhook Deleter</a>
         <a href="credits.html">Credits</a>
+        <a href="spammer.html">Webhook Spammer</a>
     </div>
     <h1>Webhook Deleter</h1>
     <div class="webhook-container" id="webhookContainer">
@@ -161,6 +162,7 @@
         </div>
     </div>
     <button class="add-btn" onclick="addWebhookInput()">Add Another Webhook</button>
+    <button class="reset-btn" id="resetButton" onclick="resetToOne()" style="display: none;">Reset Back to One</button>
     <p id="status"></p>
 
     <script>
@@ -170,9 +172,23 @@
             entry.classList.add('webhook-entry');
             entry.innerHTML = `
                 <input type="text" class="webhookUrl" placeholder="Enter Webhook URL">
-                <button class="delete-btn" onclick="deleteWebhook(this)">Delete</button>
+                <button class="delete-btn" onclick="deleteWebhook(this)">🗑️</button>
             `;
             container.appendChild(entry);
+
+            // Show the Reset button when a new webhook is added
+            document.getElementById('resetButton').style.display = 'inline-block';
+        }
+
+        function resetToOne() {
+            const container = document.getElementById('webhookContainer');
+            // Keep the first entry, remove others
+            while (container.children.length > 1) {
+                container.removeChild(container.lastChild);
+            }
+
+            // Hide the Reset button after resetting
+            document.getElementById('resetButton').style.display = 'none';
         }
 
         async function deleteWebhook(button) {
